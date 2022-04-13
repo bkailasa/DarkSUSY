@@ -3,7 +3,7 @@ URL: https://github.com/bkailasa/DarkSUSY/tree/CMSSW_10_2_0
 
 Configuring user info
 
-$git config --global user.name “<Name>”
+$git config --global user.name "“<Name>”"
   
 $git config --global user.email “<emailID>”
 
