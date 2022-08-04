@@ -1,0 +1,20 @@
+<use name="FWCore/PluginManager"/>
+<use name="FWCore/ParameterSet"/>
+<use name="hepmc"/>
+<use name="SimDataFormats/GeneratorProducts"/>
+<use name="clhep"/>
+<use name="root"/>
+<use name="DataFormats/Candidate"/>
+<use name="boost"/>
+<use name="rootcore"/>
+<use name="rootrflx"/>
+<use name="PhysicsTools/SelectorUtils"/>
+<use name="PhysicsTools/FWLite"/>
+<use name="DataFormats/Math"/>
+<use name="CommonTools/UtilAlgos"/>
+<use name="fastjet"/>
+<use name="fastjet-contrib"/>
+<flags EDM_PLUGIN="1"/>
+<export>
+   <lib name="1"/>
+</export>
