@@ -78,8 +78,9 @@ class TriggerSelector : public edm::stream::EDFilter<> {
 	std::map<TString, size_t> triggerIdxList; 
 	
 	unsigned int *passtrig_;
-	  
-
+	std::map<std::string, int> counts;  
+	int num;
+	
 	//virtual void beginRun(edm::Run const&, edm::EventSetup const&) override;
     //virtual void endRun(edm::Run const&, edm::EventSetup const&) override;
     //virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&) override;
@@ -121,6 +122,17 @@ TriggerSelector::~TriggerSelector()
    // do anything here that needs to be done at destruction time
    // (e.g. close files, deallocate resources etc.)
 
+
+	std::vector<std::pair<std::string, int > > vec;
+	for (auto i = counts.begin();i!=counts.end();i++){
+	vec.push_back(make_pair(i->first, i->second));
+		}
+  //sort(vec.begin(),vec.end(),sortByCount);
+
+  std::cout <<" Results "<<std::endl;
+	for (auto i = vec.begin(); i!= vec.end();i++){
+    std::cout <<" ++ "<<std::left<<std::setw(80)<<i->first<<std::right<<std::setw(20)<<i->second<<std::endl;
+	} 
 }
 
 
@@ -132,16 +144,54 @@ TriggerSelector::~TriggerSelector()
 bool TriggerSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
 
-    using namespace edm;
+  using namespace edm;
   // Retrieve TriggerResults 
+  
   edm::Handle<edm::TriggerResults> triggerBits;
   iEvent.getByToken(trigResultsToken, triggerBits);
+  
+  
   if(!triggerBits.isValid())
   {
     throw cms::Exception("TriggerResults collection not valid!"); 
   } 
   
+  if (triggerBits.isValid())
+  {
+  std::cout << "TriggerResults found, number of HLT paths: " << triggerBits->size()<<std::endl;
+ 
+  const edm::TriggerNames& trns = iEvent.triggerNames(*triggerBits);
+    std::vector<std::string>  names = trns.triggerNames();
+    edm::TriggerResultsByName resultsByNameHLT = iEvent.triggerResultsByName(*triggerBits);
+	
+	
+	
+	
+  for (auto inm = names.begin(); inm!= names.end(); inm++)
+  {
+	  
+     //std::cout <<*inm<<std::endl;
+	 //std::cout<<"Is it fired?  --  " <<resultsByNameHLT.accept(*inm)<<std::endl;
+      
+	 if (resultsByNameHLT.accept(*inm)) //&&	
+		//inm->find("HLT") == 0 &&
+		//inm->find("ZeroBias") ==  std::string::npos &&
+		//inm->find("Physics") ==  std::string::npos &&
+		//inm->find("Random") ==  std::string::npos)
+	  {
+		if (counts.find(*inm) == counts.end())
+		{
+		counts[*inm]=0;
+		}
+		num = counts[*inm]++;
+		std::cout<<"this is the count   :"<<num<<std::endl;
+		}
+  }
+}
   
+  
+  
+  /*
   const edm::TriggerNames& triggerNames = iEvent.triggerNames(*triggerBits);
 
 	for(unsigned int itrg = 0; itrg < triggerBits->size(); ++itrg) {
@@ -150,7 +200,7 @@ bool TriggerSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
     if(accept) passtrig_[itrg] = 1;
     else       passtrig_[itrg] = 0;
 	
-	std::cout<<trigname<<" : "<<*passtrig_<<std::endl;
+	std::cout<<itrg<<"  "<<trigname<<std::setw(30) <<*passtrig_<<std::endl;
   }
 
 
@@ -171,7 +221,7 @@ bool TriggerSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
   }
 
-   
+ */  
 
 
    using namespace edm;
