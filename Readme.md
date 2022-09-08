@@ -1,28 +1,20 @@
-URL: https://github.com/bkailasa/DarkSUSY/tree/CMSSW_10_2_0
+URL: https://github.com/bkailasa/DarkSUSY
 
+cmsrel CMSSW_10_2_16_UL2
 
-Configuring user info
+cd CMSSW_10_2_16_UL2/src
 
-$git config --global user.name "“<Name>”"
-  
-$git config --global user.email “<emailID>”
+cmsenv
 
-On your working directory in CMSSW
-  
-Initialization of empty Git repository
-  
-$git init
-  
-Cloning the working remote directory
-  
-$git clone https://github.com/bkailasa/DarkSUSY.git
+git cms-init
 
-Since the branch CMSSW_10_2_16_UL2 is set as default, it will be cloned.
+Clone the required Git repository from the remote
 
-Committing the changes
-  
-$git commit –m “<your message>”
-  
-Pushing the changes to remote
-  
-$git push origin CMSSW_10_2_0
+git clone https://github.com/bkailasa/DarkSUSY
+
+To get the DataFormats/Common directory from CMSSW to my local,
+
+-cms-addpkg DataFormats/Common
+
+Now you have DataFormats/Common directories in your /src
+
