@@ -17,7 +17,7 @@ Cloning the working remote directory
   
 $git clone https://github.com/bkailasa/DarkSUSY.git
 
-Since the branch CMSSW_10_2_0 is set as default, it will be cloned.
+Since the branch CMSSW_10_2_16_UL2 is set as default, it will be cloned.
 
 Committing the changes
   
